@@ -16,7 +16,7 @@ const client = new Client({
 })
 
 client.on("ready", () => console.log("ready!"))
-client.on("messageCreate", handler)
+client.on("messageCreate", handler(client))
 client.on("voiceStateUpdate", vcHandler(client))
 
 client.login(process.env.TOKEN)

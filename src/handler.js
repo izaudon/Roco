@@ -1,16 +1,30 @@
 import talk from "./talk.js"
 
-export const handler = async msg => {
+export const handler = client => async msg => {
   if (msg.author.bot) return
+
+  // if (/(D|d)iggy/.test(msg.content)) {
+  //   const diggy = ["分かってんだろ？ﾍﾟｲｽ", "ア アラララァ ア アァ！", "笑い止まんねぇよ"]
+  //   await client.user.setAvatar("./public/diggy.jpg")
+  //   msg.channel.send(random(diggy))
+  //   //await client.user.setAvatar("./public/default.jpg")
+  // }
+
+  let commentFlag = 0
+  if (/伴田|路子|みちこ|コロちゃん/.test(msg.content)) {
+    const rocoIsRoco = ["ロコはロコです！", "ロコはロコです～！", "ロコはロコですー！", "ロコのファーストネームは、ロコなんですってば～！"]
+    msg.channel.send(random(rocoIsRoco))
+    commentFlag = 1
+  }
+
   if (!/ロコ/.test(msg.content)) return
 
   const funcs = Object.keys(talk.command)
-  let funcFlag = 0
   for (const key of funcs) {
     const regex = new RegExp(key)
     if (regex.test(msg.content)) {
       await talk.command[key](msg)
-      funcFlag = 1
+      commentFlag = 1
     }
   }
 
@@ -32,7 +46,7 @@ export const handler = async msg => {
   if (currentAnswer === undefined) {
     currentAnswer = random(talk.reply)
   }
-  if (funcFlag === 0) {
+  if (commentFlag === 0) {
     msg.channel.send(currentAnswer)
   }
 
