@@ -3,12 +3,12 @@ import talk from "./talk.js"
 export const handler = client => async msg => {
   if (msg.author.bot) return
 
-  // if (/(D|d)iggy/.test(msg.content)) {
-  //   const diggy = ["分かってんだろ？ﾍﾟｲｽ", "ア アラララァ ア アァ！", "笑い止まんねぇよ"]
-  //   await client.user.setAvatar("./public/diggy.jpg")
-  //   msg.channel.send(random(diggy))
-  //   //await client.user.setAvatar("./public/default.jpg")
-  // }
+  if (/(D|d)iggy/.test(msg.content)) {
+    const diggy = ["分かってんだろ？ﾍﾟｲｽ", "ア アラララァ ア アァ！", "笑い止まんねぇよ"]
+    await client.user.setAvatar("https://raw.githubusercontent.com/izaudon/Roco/master/public/diggy.jpg")
+    await msg.channel.send(random(diggy))
+    await client.user.setAvatar("https://raw.githubusercontent.com/izaudon/Roco/master/public/default.jpg")
+  }
 
   let commentFlag = 0
   if (/伴田|路子|みちこ|コロちゃん/.test(msg.content)) {
