@@ -3,4 +3,3 @@ node_modules/
 .dockerignore
 Dockerfile
 fly.toml
-public/
