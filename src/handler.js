@@ -5,9 +5,19 @@ export const handler = client => async msg => {
 
   if (/(D|d)iggy/.test(msg.content)) {
     const diggy = ["分かってんだろ？ﾍﾟｲｽ", "ア アラララァ ア アァ！", "笑い止まんねぇよ"]
-    await client.user.setAvatar("https://raw.githubusercontent.com/izaudon/Roco/master/public/diggy.jpg")
-    await msg.channel.send(random(diggy))
-    await client.user.setAvatar("https://raw.githubusercontent.com/izaudon/Roco/master/public/default.jpg")
+    const sendText = random(diggy)
+    const username = "Diggy'MO"
+    const avatarURL = "https://raw.githubusercontent.com/izaudon/Roco/master/public/diggy.jpg"
+    const webhook = await (async () => {
+      for (const [ , webhook ] of (await msg.channel.fetchWebhooks())) {
+        if (webhook.name === "diggy") return webhook
+      }
+    })() || await msg.channel.createWebhook({name: "diggy"})
+    await webhook.send({
+      content: sendText,
+      username: username,
+      avatarURL: avatarURL,
+    })
   }
 
   let commentFlag = 0

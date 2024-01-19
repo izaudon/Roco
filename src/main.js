@@ -11,6 +11,7 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildWebhooks,
     GatewayIntentBits.MessageContent,
   ],
 })

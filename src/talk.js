@@ -1,7 +1,8 @@
 export default {
   reply: ["どうかしましたか？", "はい！", "はい！ロコですよ！", "ロコです！", "なんですか〜？プロデューサー！"],
   command: {
-    "みくじ": fortune
+    "みくじ": fortune,
+    "^(?=.*アイドル)(?=.*ランダム).*$": randomIdol,
   },
   answer: {
     "ping": ":ping_pong:\npongです！",
@@ -78,4 +79,16 @@ export async function fortune(msg) {
   } else {
     random(false)
   }
+}
+
+export async function randomIdol(msg) {
+  const button = new ButtonComponent()
+    .setStyle("PRIMARY")
+    .setLabel("unko")
+  await channel.send({
+    content: "ちんこ",
+    components: [
+      new Discord.MessageActionRow().addComponents(button)
+    ]
+  })
 }
