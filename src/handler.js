@@ -1,3 +1,4 @@
+import { ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js"
 import talk from "./talk.js"
 
 export const handler = client => async msg => {
@@ -18,6 +19,10 @@ export const handler = client => async msg => {
       username: username,
       avatarURL: avatarURL,
     })
+  }
+
+  if (/^(?=.*アイドル)(?=.*ランダム).*$/.test(msg.content)) {
+    randomIdol(msg)
   }
 
   let commentFlag = 0
@@ -64,4 +69,27 @@ export const handler = client => async msg => {
     const randomIndex = Math.floor(Math.random() * array.length)
     return array[randomIndex]
   }
+
+  async function randomIdol(msg) {
+    const allButton = new ButtonBuilder()
+      .setCustomId("randomMillionAll")
+      .setStyle(ButtonStyle.Primary)
+      .setLabel("765PRO (52人)")
+    const ASButton = new ButtonBuilder()
+      .setCustomId("randomAllStars")
+      .setStyle(ButtonStyle.Danger)
+      .setLabel("ALLSTARS (13人)")
+    const mlButton = new ButtonBuilder()
+      .setCustomId("randomMillionStars")
+      .setStyle(ButtonStyle.Success)
+      .setLabel("MILLIONSTARS (39人)")
+    await msg.channel.send({
+      content: "どのチームからチョイスしますか？",
+      components: [
+        new ActionRowBuilder()
+          .addComponents(allButton, ASButton, mlButton)
+      ]
+    })
+  }
+
 }
