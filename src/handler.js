@@ -21,7 +21,7 @@ export const handler = client => async msg => {
     })
   }
 
-  if (/^(?=.*プロフィール)(?=.*ランダム).*$/.test(msg.content)) {
+  if (/^(?=.*プロフ)(?=.*ランダム).*$/.test(msg.content)) {
     randomIdol(msg)
   }
 
