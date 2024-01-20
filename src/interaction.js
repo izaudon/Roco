@@ -59,6 +59,7 @@ export const interactionHandler = async itr => {
       )
       .setColor(idol.colorCode)
       .setThumbnail(imageURL)
+      .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
     itr.channel.send({ embeds: [embed] })
     itr.message.delete()
   }
