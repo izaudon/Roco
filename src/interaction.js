@@ -98,9 +98,9 @@ export const interactionHandler = async itr => {
     const color = idol.colorCode
     const rawText = awakened === "0" ? card.lines.flavor.beforeAwakened
                : card.lines.flavor.afterAwakened
-    const text = rawText.replaceAll("\{\$P\$\}", "<プロデューサー名>")
+    const text = rawText.replaceAll("\{\$P\$\}", " <プロデューサー名> ")
     const embed = new EmbedBuilder()
-      .setTitle(rarity + card.name)
+      .setTitle(rarity+ " " + card.name)
       .setURL("https://mltd.matsurihi.me/cards/" + card.id)
       .setDescription(awakened === "0" ? "特訓前" : "特訓後")
       .setFields({ name: "フレーバーテキスト", value: text })
