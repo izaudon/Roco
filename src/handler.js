@@ -25,6 +25,10 @@ export const handler = client => async msg => {
     randomIdol(msg)
   }
 
+  if (/^(?=.*カード)(?=.*ランダム).*$/.test(msg.content)) {
+    randomCard(msg)
+  }
+
   let commentFlag = 0
   if (/伴田|路子|みちこ|コロちゃん/.test(msg.content)) {
     const rocoIsRoco = ["ロコはロコです！", "ロコはロコです～！", "ロコはロコですー！", "ロコのファーストネームは、ロコなんですってば～！"]
@@ -88,6 +92,24 @@ export const handler = client => async msg => {
       components: [
         new ActionRowBuilder()
           .addComponents(allButton, ASButton, mlButton)
+      ]
+    })
+  }
+
+  async function randomCard(msg) {
+    const ssrButton = new ButtonBuilder()
+      .setCustomId("cardSSR")
+      .setStyle(ButtonStyle.Primary)
+      .setLabel("SSR")
+    const rButton = new ButtonBuilder()
+      .setCustomId("cardR")
+      .setStyle(ButtonStyle.Primary)
+      .setLabel("SR・R")
+    await msg.channel.send({
+      content: "どのレアリティからチョイスしますか？",
+      components: [
+        new ActionRowBuilder()
+          .addComponents(ssrButton, rButton)
       ]
     })
   }
