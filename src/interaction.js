@@ -43,9 +43,9 @@ export const interactionHandler = async itr => {
       .setDescription(idol.alphabetName)
       .setFields(
         { name: "CV", value: idol.cv },
-        { name: "\u200B", value: "\u200B" },
+        { name: "\u200B", value: "Profile" },
         { name: "属性", value: type, inline: true },
-        { name: "年齢", value: String(idol.age), inline: true },
+        { name: "年齢", value: String(idol.age) + "歳", inline: true },
         { name: "誕生日", value: birthday, inline: true },
         { name: "出身地", value: idol.birthplace.name, inline: true },
         { name: "血液型", value: idol.bloodType.name, inline: true },
