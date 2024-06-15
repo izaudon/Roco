@@ -1,10 +1,12 @@
 export default {
+  diggy: ["分かってんだろ？ﾍﾟｲｽ", "ア アラララァ ア アァ！", "笑い止まんねぇよ"],
   reply: ["どうかしましたか？", "はい！", "はい！ロコですよ！", "ロコです！", "なんですか〜？プロデューサー！"],
   command: {
     "みくじ": fortune,
   },
   answer: {
     "ping": ":ping_pong:\npongです！",
+    "コマンド": "`!help` と入力してみてください！",
     "どうした|どうかした|どうないした": ["どうしたも、こうしたもないで", "どうしたも、こうしたもないです！"],
     "何かあったのか": ["何かあったのか、じゃないで","何かあったのか、じゃないです！"],
     "おはよ": "おはようございます、プロデューサー！",
@@ -41,7 +43,7 @@ export async function fortune(msg) {
     { unsei: "> \[**ロコ吉**\]", comment: "\nファンタスティックです！", rarity: "ssr" },
     { unsei: "> \[**ぴょん吉**\]", comment: "\n……誰ですか？", rarity: "ssr" },
   ]
-  const random = async (loop) =>{
+  const random = async loop =>{
     const randomNumber = Math.random()
     let filter
     if (randomNumber <= weight.ssr) {
