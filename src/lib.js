@@ -41,3 +41,28 @@ export const idolProfile = (idol) => {
     .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
   return embed
 }
+
+export const cardInformation = async (card, awakened) => {
+  const rarity = card.rarity === 4 ? "SSR"
+               : card.rarity === 3 ? "SR"
+               : "R"
+  const branch = rarity === "SSR" ? ["_bg/", ".png"] : ["/", "_b.png"]
+  const imageURL = "https://storage.matsurihi.me/mltd/card" + branch[0]
+                 + card.resourceId + "_" + awakened + branch[1]
+  const colorURL = "https://api.matsurihi.me/api/mltd/v2/idols/" + String(card.idolId)
+  const response = await fetch(colorURL)
+  const idol = await response.json()
+  const color = idol.colorCode
+  const rawText = awakened === "0" ? card.lines.flavor.beforeAwakened
+             : card.lines.flavor.afterAwakened
+  const text = rawText.replaceAll("\{\$P\$\}", " <プロデューサー名> ")
+  const embed = new EmbedBuilder()
+    .setTitle(rarity+ "　" + card.name)
+    .setURL("https://mltd.matsurihi.me/cards/" + card.id)
+    .setDescription(awakened === "0" ? "特訓前" : "特訓後")
+    .setFields({ name: "フレーバーテキスト", value: text })
+    .setImage(imageURL)
+    .setColor(color)
+    .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
+  return embed
+}

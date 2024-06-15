@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js"
-import {idolProfile} from "../lib.js"
+import { idolProfile } from "../lib.js"
 
 export const man = {
   description: "検索したアイドルのプロフィール情報を表示します。",
@@ -13,16 +13,19 @@ export default async msg =>{
   const response = await fetch(url)
   const idols = await response.json()
 
+  const words = idolName.split(/\s|　/)
   let idol = []
-  const regex = new RegExp(idolName)
-  await idols.forEach(i => {
-    if (regex.test(i.displayName) || regex.test(i.fullNameRuby)) {
-      idol.push(i)
-    } else if (regex.test(i.id)) {
-      idol.push(i)
-    }
-  })
-  if (!idol) return msg.channel.send("そんなアイドルはいません！")
+  for (const name of words) {
+    const regex = new RegExp(name)
+    await idols.forEach(i => {
+      if (regex.test(i.displayName) || regex.test(i.fullNameRuby)) {
+        idol.push(i)
+      } else if (regex.test(i.id)) {
+        idol.push(i)
+      }
+    })
+  }
+  if (idol.length == 0) return msg.channel.send("そんなアイドルはいません！")
 
   if (idol.length == 1) {
     idol = idol.pop()
