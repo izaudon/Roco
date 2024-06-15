@@ -5,7 +5,7 @@ let card = []
 
 export const man = {
   description: "検索したカードの情報を表示します。",
-  option: "<カード名> (<アイドル名>, <レアリティ>)"
+  option: "<カード名> (<アイドル名>)"
 }
 
 export default async msg =>{
@@ -16,28 +16,17 @@ export default async msg =>{
   const cards = await response.json()
 
   const words = cardName.split(/\s|　/)
-  const rarity = r => {
-    const regex = new RegExp(r)
-    const rarityId = regex.test("/(?i)ssr/") ? 4
-                   : regex.test("/(?i)sr/")  ? 3
-                   : regex.test("/(?i)r/")   ? 2
-                   : regex.test("/(?i)n/")   ? 1
-                   : 0
-    return rarityId
-  }
   for (const name of words) {
     const regex = new RegExp(name)
     await cards.forEach(c => {
       if (regex.test(c.name)) {
-        card.push(c)
-      } else if (c.rarity === rarity(name)) {
         card.push(c)
       }
     })
   }
   if (card.length == 0) return msg.channel.send("そんなカードはありません！")
 
-  const rId = async r => {
+  const rarityId = async r => {
     const rName = await r == 1 ? "N"
                       : r == 2 ? "R"
                       : r == 3 ? "SR"
@@ -48,7 +37,7 @@ export default async msg =>{
 
   if (card.length == 1) {
     card = card.pop()
-    const title = "検索結果 : " + await rId(card.rarity) + "　" + card.name
+    const title = "検索結果 : " + await rarityId(card.rarity) + "　" + card.name
 
     const unawakenedButton = new ButtonBuilder()
       .setCustomId("searchCardUnawakened")
@@ -73,7 +62,7 @@ export default async msg =>{
   } else {
     const names = []
     for (const c of card) {
-      const n = "- " + await rId(c.rarity)  + "　" + c.name + "\n"
+      const n = "- " + await rarityId(c.rarity)  + "　" + c.name + "\n"
       names.push(n)
       if (names.indexOf(n) == 10) {
         names.push("...etc")
