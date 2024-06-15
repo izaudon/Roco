@@ -75,6 +75,7 @@ export default async msg =>{
       .setTitle("検索結果が複数存在します。")
       .setDescription(text)
     msg.channel.send({ embeds: [embed] })
+  card = []
   }
 
 }
