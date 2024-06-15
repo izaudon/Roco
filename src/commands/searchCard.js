@@ -5,7 +5,7 @@ let card = []
 
 export const man = {
   description: "検索したカードの情報を表示します。",
-  option: "<カード名> または <アイドル名>"
+  option: "<カード名> (<アイドル名>, <レアリティ>)"
 }
 
 export default async msg =>{
