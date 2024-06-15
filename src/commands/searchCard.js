@@ -9,6 +9,7 @@ export const man = {
 }
 
 export default async msg =>{
+  let card = []
   const cardName = msg.content.replace("!searchCard", "").trim()
   if (!cardName) return msg.channel.send("検索ワードを指定してください！")
   const url = "https://api.matsurihi.me/api/mltd/v2/cards?includeLines"
