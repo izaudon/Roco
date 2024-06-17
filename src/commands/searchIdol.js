@@ -20,7 +20,7 @@ export default async msg =>{
     const regex = new RegExp(name)
     const filter = (i => regex.test(i.displayName) ||
                          regex.test(i.fullNameRuby) ||
-                         regex.test(i.id))
+                         String(i.id) === name)
     idol = await idol.filter(i => filter(i))
   }
 
