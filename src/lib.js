@@ -59,13 +59,13 @@ export const cardInformation = async (card) => {
   const color = idol.colorCode
   const rawText = [card.lines.flavor.beforeAwakened,
                    card.lines.flavor.afterAwakened]
-  //const text = await rawText.forEach(t => t.replaceAll("\{\$P\$\}", " <プロデューサー名> "))
   const flavor = []
+
   for (const t of rawText) {
     const text = t.replaceAll("\{\$P\$\}", " <プロデューサー名> ")
     flavor.push(text)
   }
-  //return console.log(flavor)
+
   const embed1 = new EmbedBuilder()
     .setTitle(rarity+ "　" + card.name)
     .setURL("https://mltd.matsurihi.me/cards/" + card.id)

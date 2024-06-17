@@ -33,6 +33,7 @@ export const randomIdolInteraction = async itr => {
     max: 0,
     min: 0,
   }
+
   if (itr.customId === "randomMillionAll") {
     range.max = 52+1
     range.min = 1
@@ -45,6 +46,7 @@ export const randomIdolInteraction = async itr => {
   } else {
     return
   }
+
   const idolId = Math.floor(Math.random() * (range.max - range.min) + range.min)
   const url = "https://api.matsurihi.me/api/mltd/v2/idols/" + String(idolId)
   const response = await fetch(url)

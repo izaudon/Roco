@@ -9,10 +9,12 @@ export default async msg => {
 
   for (const key of commands) {
     const regex = new RegExp("!" + key)
+
     if (regex.test(msg.content)) {
       const path = "./commands/" + key + ".js"
       const command = await import(path)
       command.default(msg)
     }
+
   }
 }

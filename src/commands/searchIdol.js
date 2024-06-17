@@ -8,23 +8,22 @@ export const man = {
 
 export default async msg =>{
   const idolName = msg.content.replace("!searchIdol", "").trim()
+
   if (!idolName) return msg.channel.send("検索ワードを指定してください！")
+
   const url = "https://api.matsurihi.me/api/mltd/v2/idols/"
   const response = await fetch(url)
-  const idols = await response.json()
-
+  let idol = await response.json()
   const words = idolName.split(/\s|　/)
-  let idol = []
+
   for (const name of words) {
     const regex = new RegExp(name)
-    await idols.forEach(i => {
-      if (regex.test(i.displayName) || regex.test(i.fullNameRuby)) {
-        idol.push(i)
-      } else if (regex.test(i.id)) {
-        idol.push(i)
-      }
-    })
+    const filter = (i => regex.test(i.displayName) ||
+                         regex.test(i.fullNameRuby) ||
+                         regex.test(i.id))
+    idol = await idol.filter(i => filter(i))
   }
+
   if (idol.length == 0) return msg.channel.send("そんなアイドルはいません！")
 
   if (idol.length == 1) {

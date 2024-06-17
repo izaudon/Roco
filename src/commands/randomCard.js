@@ -26,6 +26,7 @@ export default async msg => {
 
 export const randomCardInteraction = async itr => {
   let range
+
   if (itr.customId === "cardSSR") {
     range = "4&exType=0,4,14,20"
   } else if (itr.customId === "cardR") {
@@ -33,6 +34,7 @@ export const randomCardInteraction = async itr => {
   } else {
     return
   }
+
   const url = "https://api.matsurihi.me/api/mltd/v2/cards?includeLines&rarity=" + range
   const responce = await fetch(url)
   const cardsArray = await responce.json()

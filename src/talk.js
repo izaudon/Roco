@@ -46,6 +46,7 @@ export async function fortune(msg) {
   const random = async loop =>{
     const randomNumber = Math.random()
     let filter
+
     if (randomNumber <= weight.ssr) {
       filter = "ssr"
     } else if (randomNumber <= weight.sr) {
@@ -53,13 +54,17 @@ export async function fortune(msg) {
     } else {
       filter = "r"
     }
+
     const byRarity = []
+
     for (const item of mikuji) {
       if (item.rarity === filter) {
         byRarity.push({ unsei: item.unsei, comment: item.comment })
       }
     }
+
     const marge = []
+
     if (loop) {
       for (const item of byRarity) {
         marge.push(item.unsei)
@@ -69,8 +74,10 @@ export async function fortune(msg) {
         marge.push(item.unsei + item.comment)
       }
     }
+
     msg.channel.send(marge[Math.floor(Math.random() * marge.length)])
   }
+
   if (/\d/.test(msg.content)) {
     const times = msg.content.replace(/[^0-9]/g, "")
     if (times > 10) times = 10
@@ -80,4 +87,5 @@ export async function fortune(msg) {
   } else {
     random(false)
   }
+
 }
