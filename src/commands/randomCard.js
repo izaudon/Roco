@@ -37,8 +37,7 @@ export const randomCardInteraction = async itr => {
   const responce = await fetch(url)
   const cardsArray = await responce.json()
   const card = randomArray(cardsArray)
-  const awakened = String(Math.floor(Math.random() * 2))
-  const embed = await cardInformation(card, awakened)
+  const embed = await cardInformation(card)
   itr.message.delete()
-  itr.channel.send({ embeds: [embed] })
+  itr.channel.send({ embeds: [embed[0], embed[1]] })
 }

@@ -42,27 +42,43 @@ export const idolProfile = (idol) => {
   return embed
 }
 
-export const cardInformation = async (card, awakened) => {
+export const cardInformation = async (card) => {
   const rarity = card.rarity === 4 ? "SSR"
                : card.rarity === 3 ? "SR"
                : "R"
   const branch = rarity === "SSR" ? ["_bg/", ".png"] : ["/", "_b.png"]
-  const imageURL = "https://storage.matsurihi.me/mltd/card" + branch[0]
-                 + card.resourceId + "_" + awakened + branch[1]
-  const colorURL = "https://api.matsurihi.me/api/mltd/v2/idols/" + String(card.idolId)
-  const response = await fetch(colorURL)
+  const imageURL = [
+    "https://storage.matsurihi.me/mltd/card" + branch[0]
+    + card.resourceId + "_0" + branch[1],
+    "https://storage.matsurihi.me/mltd/card" + branch[0]
+    + card.resourceId + "_1" + branch[1]
+    ]
+  const idolURL = "https://api.matsurihi.me/api/mltd/v2/idols/" + String(card.idolId)
+  const response = await fetch(idolURL)
   const idol = await response.json()
   const color = idol.colorCode
-  const rawText = awakened === "0" ? card.lines.flavor.beforeAwakened
-             : card.lines.flavor.afterAwakened
-  const text = rawText.replaceAll("\{\$P\$\}", " <プロデューサー名> ")
-  const embed = new EmbedBuilder()
+  const rawText = [card.lines.flavor.beforeAwakened,
+                   card.lines.flavor.afterAwakened]
+  //const text = await rawText.forEach(t => t.replaceAll("\{\$P\$\}", " <プロデューサー名> "))
+  const flavor = []
+  for (const t of rawText) {
+    const text = t.replaceAll("\{\$P\$\}", " <プロデューサー名> ")
+    flavor.push(text)
+  }
+  //return console.log(flavor)
+  const embed1 = new EmbedBuilder()
     .setTitle(rarity+ "　" + card.name)
     .setURL("https://mltd.matsurihi.me/cards/" + card.id)
-    .setDescription(awakened === "0" ? "特訓前" : "特訓後")
-    .setFields({ name: "フレーバーテキスト", value: text })
-    .setImage(imageURL)
+    .setDescription("フレーバーテキスト")
+    .setFields(
+      { name: "特訓前", value: flavor[0] },
+      { name: "特訓後", value: flavor[1] }
+    )
+    .setImage(imageURL[0])
     .setColor(color)
     .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
-  return embed
+  const embed2 = new EmbedBuilder()
+    .setURL("https://mltd.matsurihi.me/cards/" + card.id)
+    .setImage(imageURL[1])
+  return [embed1, embed2]
 }

@@ -29,8 +29,11 @@ export default async msg =>{
 
   if (idol.length == 1) {
     idol = idol.pop()
+    const resultEmbed = new EmbedBuilder()
+      .setColor(0xfff03c)
+      .setTitle("検索結果 : ")
     const embed = idolProfile(idol)
-    msg.channel.send({ embeds: [embed] })
+    msg.channel.send({ embeds: [resultEmbed, embed] })
   } else {
     const names = []
     idol.forEach(i => {

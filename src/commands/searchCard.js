@@ -9,7 +9,6 @@ export const man = {
 }
 
 export default async msg =>{
-  let card = []
   const cardName = msg.content.replace("!searchCard", "").trim()
   if (!cardName) return msg.channel.send("検索ワードを指定してください！")
   const url = "https://api.matsurihi.me/api/mltd/v2/cards?includeLines"
@@ -38,28 +37,11 @@ export default async msg =>{
 
   if (card.length == 1) {
     card = card.pop()
-    const title = "検索結果 : " + await rarityId(card.rarity) + "　" + card.name
-
-    const unawakenedButton = new ButtonBuilder()
-      .setCustomId("searchCardUnawakened")
-      .setStyle(ButtonStyle.Primary)
-      .setLabel("特訓 前")
-    const awakenedButton = new ButtonBuilder()
-      .setCustomId("searchCardAwakened")
-      .setStyle(ButtonStyle.Primary)
-      .setLabel("特訓 後")
-    const embed = new EmbedBuilder()
+    const resultEmbed = new EmbedBuilder()
       .setColor(0xfff03c)
-      .setTitle(title)
-      .setDescription("どちらの情報を表示しますか？")
-    msg.channel.send({ embeds: [embed] })
-    await msg.channel.send({
-      components: [
-        new ActionRowBuilder()
-          .addComponents(unawakenedButton, awakenedButton)
-      ]
-    })
-
+      .setTitle("検索結果 : ")
+    const embed = await cardInformation(card)
+    await msg.channel.send({ embeds: [resultEmbed, embed[0], embed[1]] })
   } else {
     const names = []
     for (const c of card) {
@@ -76,22 +58,6 @@ export default async msg =>{
       .setTitle("検索結果が複数存在します。")
       .setDescription(text)
     msg.channel.send({ embeds: [embed] })
-  card = []
   }
 
-}
-
-export const searchCardInteraction = async (itr) => {
-  let awakened
-  if (itr.customId === "searchCardUnawakened") {
-    awakened = "0"
-  } else if (itr.customId === "searchCardAwakened") {
-    awakened = "1"
-  } else {
-    return
-  }
-  const embed = await cardInformation(card, awakened)
-  itr.channel.send({ embeds: [embed] })
-  itr.message.delete()
-  card = []
 }
