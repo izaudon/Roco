@@ -69,16 +69,15 @@ export const cardInformation = async (card) => {
   const embed1 = new EmbedBuilder()
     .setTitle(rarity+ "　" + card.name)
     .setURL("https://mltd.matsurihi.me/cards/" + card.id)
-    .setDescription("フレーバーテキスト")
-    .setFields(
-      { name: "特訓前", value: flavor[0] },
-      { name: "特訓後", value: flavor[1] }
-    )
+    .setDescription("特訓前")
+    .setFields({ name: "フレーバーテキスト", value: flavor[0] })
     .setImage(imageURL[0])
     .setColor(color)
-    .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
   const embed2 = new EmbedBuilder()
-    .setURL("https://mltd.matsurihi.me/cards/" + card.id)
+    .setDescription("特訓後")
+    .setFields({ name: "フレーバーテキスト", value: flavor[1] })
     .setImage(imageURL[1])
+    .setColor(color)
+    .setFooter({ text: "Powered by matsurihi.me", iconURL: "https://pbs.twimg.com/profile_images/1093568518421770240/A2rE7EBk_400x400.jpg" })
   return [embed1, embed2]
 }
